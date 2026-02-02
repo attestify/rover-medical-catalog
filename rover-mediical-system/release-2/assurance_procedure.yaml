@@ -1,0 +1,65 @@
+apiVersion: 1.0.0
+kind: AssuranceProcedure
+procedure:
+  nrn: "nrn:procedure:rover-medical/rover-medicine-system"
+  short: "Rover Medical System - Verification Procedure"
+  description: |
+    "Verifies the configutation and communcations between the Pet Medicine Application and it's database."
+activity:
+  - name: pet-medicine-app
+    short: "Pet Medicine Application Configuration"
+    description: |
+      "Verify the Pet Medicine Application has the required configuration settings to
+      ensure security and operational resilence control standards are met."
+    action:
+      - name: database-connection
+        short: "Database Connection String"
+        description: "The application connects to the databse at network location 'db://pet-medicine-db/prescriptions'."
+        test: "activity/pet-medicine-app/database-connection.py"
+        evidence: "evidence/pet-medicine-app/app-config.toml"
+      - name: database-user
+        short: "Database User"
+        description: "The applicaiton authenticates with the database user of 'Pet_Medicine_App'."
+        test: "activity/pet-medicine-app/database-user.py"
+        evidence: "evidence/pet-medicine-app/app-config.toml"
+      - name: database-user-secret
+        short: "Database User Secret String"
+        description: "The application retrieves the database users credentials from the secrets store 'secrets://vault/prod/pet_medicine_app_db_user'."
+        test: "activity/pet-medicine-app/database-user-secret.py"
+        evidence: "evidence/pet-medicine-app/app-config.toml"
+      - name: enforce-https
+        short: "Enforce HTTPS"
+        description: "The applicaiton enforces the use of HTTPS when communicating with clients."
+        test: "activity/pet-medicine-app/enforce-https.py"
+        evidence: "evidence/pet-medicine-app/app-config.toml"
+      - name: app-tls-configured
+        short: "Application TLS Configured"
+        description: "The applicaiton is configured for production using the properly public key, private key, and trusted certificate bundle."
+        test: "activity/pet-medicine-app/app-tls-configured.py"
+        evidence: "evidence/pet-medicine-app/app-config.toml"
+  - name: pet-medicine-db
+    short: "Pet Medicine Database Configuration"
+    description: |
+      "Verify the Pet Medicine Database configuration has the required settings to
+      ensure security and operational resilence control standards are met."
+    action:
+      - name: database-host-user
+        short: "Database Host User"
+        description: "The database operates under host user account 'pet-med-db'."
+        test: "activity/pet-medicine-db/database-host-user.py"
+        evidence: "evidence/pet-medicine-db/my-db.ini"
+      - name: database-port
+        short: "Database Port"
+        description: "The database communicates from port '3306'."
+        test: "activity/pet-medicine-db/database-port.py"
+        evidence: "evidence/pet-medicine-db/my-db.ini"
+      - name: enforce-tls
+        short: "Enforce TLS"
+        description: "The database requires TLS for all TCP connections."
+        test: "activity/pet-medicine-db/enforce-tls.py"
+        evidence: "evidence/pet-medicine-db/my-db.ini"
+      - name: database-tls-configured
+        short: "Current TLS Certificate"
+        description: "The database is configured for production using the proper public key, private key, and trusted certificate bundle."
+        test: "activity/pet-medicine-db/database-tls-configured.py"
+        evidence: "evidence/pet-medicine-db/my-db.ini"
