@@ -133,3 +133,19 @@ activity:
         description: "The provided Intrusion Dection system is enabled for Rover Cloud."
         test: "activity/rover-cloud/intrusion_detection_enabled.py"
         evidence: "evidence/rover-cloud/cloud-config.yaml"
+
+  - name: exa-doo-dc
+    short: "Exa-Doo Datacenter"
+    description: |
+      "Verify all Rover Medical Third-Party (3rd) Risk assessments and formal attestations for the Exa-Doo Data Center have been completed."
+    action:
+      - name: current-soc1
+        short: "Current SOC1"
+        description: "Exa-Doo Datacenter's SOC1 Type II Report has been issued within the past 18 months."
+        test: "activity/exa-doo-dc/current-soc1.py"
+        evidence: "evidence/exa-doo-dc/soc1-report-analysis.yaml"
+      - name: soc1-within-expiry
+        short: "SOC1 Within Expiration"
+        description: "Exa-Doo Datacenter’s SOC 1 Type II report has more than 90 days before it reaches 18 months old."
+        test: "activity/exa-doo-dc/soc1-within-expiry.py"
+        evidence: "evidence/exa-doo-dc/soc1-report-analysis.yaml"
